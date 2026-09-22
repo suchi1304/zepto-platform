@@ -1,43 +1,34 @@
-# Zepto Platform: E-Commerce Data, BI & Support Platform
+# Zepto Platform Capstone Project
 
-An end-to-end data and AI engineering platform built for e-commerce catalog operations. The project ingests live product listings, transforms raw currencies and metadata, loads them into an embedded relational database, provides an interactive BI analytics dashboard, and exposes an intelligent catalog retrieval support engine.
-
----
-
-##  Architecture Overview
-
-1. **Ingestion & ETL Pipeline (`data_pipeline/`)**
-   * Multi-page web scraper extracting product titles, categories, pricing, ratings, and stock status.
-   * Cleans text encoding artifacts, strips currency symbols via regex, and converts GBP to INR (₹105/GBP).
-   * Maps qualitative star ratings (`One` to `Five`) to normalized integer scales (`1` to `5`).
-   * Loads structured tabular records directly into an SQLite database (`catalog.db`).
-
-2. **Analytics & BI Dashboard (`analytics/`)**
-   * Interactive Streamlit dashboard reading directly from `catalog.db`.
-   * Real-time KPI summary cards (Total Inventory, Average INR Price, In-Stock Rate).
-   * Category-wise dynamic average price distribution charts.
-   * Multi-dimensional filtering by category, maximum price, and minimum star rating.
-
-3. **Customer Support Assistant (`support_assistant/`)**
-   * Parameterized catalog search engine querying SQLite inventory using SQL pattern matching.
-   * Generates formatted, conversational product recommendations with real-time stock verification.
+A comprehensive, production-ready three-module system comprising an automated data engineering pipeline, a predictive machine learning analytics suite, and a grounded GenAI support assistant.
 
 ---
 
-## Tech Stack
+## Architecture Overview
 
-* **Language**: Python 3.x
-* **Data Processing & Database**: Pandas, SQLite3, Regular Expressions (`re`)
-* **Scraping**: Requests, BeautifulSoup4
-* **Visualization & UI**: Streamlit, Matplotlib
-* **Version Control**: Git, GitHub (Feature Branch Workflow)
-
----
-
-## Quickstart & Execution
-
-### 1. Environment Setup
-```powershell
-python -m venv venv
-.\venv\Scripts\Activate.ps1
-pip install requests beautifulsoup4 pandas streamlit matplotlib
+```text
+zepto-platform/
+├── data_pipeline/             # Module 1: Web Scraper & SQL Storage (25 Marks)
+│   ├── scraper.py             # Books to Scrape catalog crawler
+│   ├── clean_and_load.py      # Normalization, SQLite ETL & 5 SQL analytical queries
+│   ├── catalog.db             # 2-Table SQLite relational DB (categories, books)
+│   ├── cleaned_books.csv      # Cleaned flat tabular export
+│   └── README.md              # ER schema & SQL vs Pandas documentation
+│
+├── analytics/                 # Module 2: Titanic Predictive Suite & Dashboard (50 Marks)
+│   ├── run_eda.py             # EDA, IQR outliers, skewness, 4 multivariate plots
+│   ├── run_modeling.py        # Leak-free ColumnTransformer, 3 classifiers, RF tuning, fare regression
+│   ├── titanic_pipeline.joblib# End-to-end fitted deployment artifact
+│   ├── titanic.csv            # Committed offline fallback dataset
+│   ├── charts/                # Exported figures (plots, decision tree, residuals)
+│   └── README.md              # Missing-value strategy, metric tables & recommendations
+│
+└── support_assistant/         # Module 3: GenAI RAG Microservice (25 Marks)
+    ├── docs/                  # 8 domain-specific operational Zepto policy documents
+    ├── setup_docs.py          # Deterministic policy document generator
+    ├── ingest.py              # ChromaDB vector store with all-MiniLM-L6-v2 embeddings
+    ├── main.py                # LangGraph 3-node StateGraph router & FastAPI application
+    ├── Dockerfile             # Containerized microservice definition
+    ├── requirements.txt       # Production dependencies
+    └── README.md              # LangGraph architecture & live request/response transcripts
+    
